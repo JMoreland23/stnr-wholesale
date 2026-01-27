@@ -1,0 +1,42 @@
+name: Deploy STNR Commerce
+
+on:
+  push:
+    branches: [ main ]  # This triggers the "Magic" when you push to main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # --- STEP 1: Build & Push the Medusa Backend ---
+      - name: Build and push Backend
+        uses: docker/build-push-action@v4
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile.prod
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/stnr-backend:latest
+
+      # --- STEP 2: Build & Push the Next.js Storefront ---
+      - name: Build and push Storefront
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./storefront/Dockerfile.prod
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/stnr-storefront:latest
+
+      # --- STEP 3: Tell Portainer to update the Stack ---
+      - name: Trigger Portainer Webhook
+        run: |
+          curl -X POST "${{ secrets.PORTAINER_WEBHOOK }}"
