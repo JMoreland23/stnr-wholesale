@@ -18,7 +18,7 @@ RUN yarn config set nodeLinker node-modules && \
 RUN chmod +x ./start.sh
 
 # Expose the port Medusa runs on
-EXPOSE 9001 5174
+EXPOSE 9000 5173
 
 # Start with migrations and then the development server
 CMD ["./start.sh"]

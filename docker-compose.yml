@@ -77,7 +77,7 @@ services:
     environment:
       - NEXT_PUBLIC_MEDUSA_BACKEND_URL=http://localhost:9001
       - MEDUSA_BACKEND_URL=http://medusa-backend:9000
-      - NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_29b4984ead39cc5d1ac6e4814295d14e9f939f47d91b88bbeeb917803b8ad890
+      - NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_3af781cb2dea599128646a2d5bedc39ebe8123b6997841de721a5828dcb360b4
       - NODE_ENV=development
     volumes:
       - ./storefront/src:/app/storefront/src
