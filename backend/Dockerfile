@@ -15,10 +15,13 @@ COPY . .
 RUN yarn config set nodeLinker node-modules && \
     yarn install --no-immutable
 
-RUN chmod +x ./start.sh
+RUN chmod +x ./start.sh && chmod +x ./worker.sh
 
 # Expose the port Medusa runs on
 EXPOSE 9000 5173
 
-# Start with migrations and then the development server
-CMD ["./start.sh"]
+# Set default mode to server, can be overridden to "worker"
+ENV SERVER_MODE=server
+
+# Start with migrations and then the appropriate mode (server or worker)
+CMD if [ "$SERVER_MODE" = "worker" ]; then ./worker.sh; else ./start.sh; fi
