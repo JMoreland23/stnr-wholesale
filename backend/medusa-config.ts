@@ -16,11 +16,7 @@ module.exports = defineConfig({
           host: "0.0.0.0",
           // Allow all hosts when running in Docker (development mode)
           // In production, this should be more restrictive
-          allowedHosts: [
-            "localhost",
-            ".localhost",
-            "127.0.0.1",
-          ],
+          allowedHosts: true,
           hmr: {
             // HMR websocket port inside container
             port: 5173,
