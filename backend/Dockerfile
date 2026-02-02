@@ -15,7 +15,7 @@ COPY . .
 RUN yarn config set nodeLinker node-modules && \
     yarn install --no-immutable
 
-RUN chmod +x ./start.sh && chmod +x ./worker.sh
+RUN chmod +x ./start.sh && test -f ./worker.sh && chmod +x ./worker.sh || true
 
 # Expose the port Medusa runs on
 EXPOSE 9000 5173

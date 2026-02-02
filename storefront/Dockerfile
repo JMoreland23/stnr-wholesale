@@ -6,7 +6,7 @@ WORKDIR /app/storefront
 RUN corepack enable && corepack prepare yarn@4.4.0 --activate
 
 # Copy storefront files
-COPY storefront/package.json storefront/yarn.lock ./
+COPY package.json yarn.lock ./
 
 # Configure standalone Yarn (non-workspace)
 RUN yarn config set enableGlobalCache false && \
@@ -16,10 +16,10 @@ RUN yarn config set enableGlobalCache false && \
 RUN yarn install --no-immutable
 
 # Copy the rest of the storefront code
-COPY storefront .
+COPY . .
 
 # Set the Backend URL
-ENV NEXT_PUBLIC_MEDUSA_BACKEND_URL=http://localhost:9001
+ENV NEXT_PUBLIC_MEDUSA_BACKEND_URL=http://localhost:9000
 ENV NEXT_TELEMETRY_DISABLED=1
 
 EXPOSE 8000
