@@ -22,7 +22,9 @@ COPY . .
 ENV NEXT_PUBLIC_MEDUSA_BACKEND_URL=http://localhost:9000
 ENV NEXT_TELEMETRY_DISABLED=1
 
-EXPOSE 8000
+# Default port for the storefront. Coolify can override with an environment variable.
+ENV PORT=3000
+EXPOSE 3000
 
-# Run in development mode (no build required)
-CMD ["./node_modules/.bin/next", "dev", "-p", "8000", "-H", "0.0.0.0"]
+# Run in development mode (no build required). Use shell form so $PORT is expanded.
+CMD sh -c "./node_modules/.bin/next dev -p ${PORT} -H 0.0.0.0"
